@@ -1,4 +1,4 @@
-const FlashDelas = () => {
+const FlashDeals = () => {
   return (
     <div>
       FlashDeals
@@ -6,4 +6,4 @@ const FlashDelas = () => {
   )
 }
 
-export default FlashDelas
+export default FlashDeals
