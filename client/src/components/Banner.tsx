@@ -18,7 +18,7 @@ const Banner = () => {
             <div className="flex-center gap-2">
               <TruckIcon className="size-4 shrink-0" />
               <span className="font-medium">
-                Free delivery on orders above Rs: 1000
+                Free delivery on orders above Rs. 1000
               </span>
             </div>
             <span className="hidden sm:inline text-white/40">|</span>
