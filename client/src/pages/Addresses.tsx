@@ -3,7 +3,6 @@ import type { Address } from "../types";
 import { dummyAddressData } from "../assets/assets";
 import { MapPinIcon, PlusIcon } from "lucide-react";
 import Loading from "../components/Loading";
-import { divIcon } from "leaflet";
 import AddressCard from "../components/AddressCard";
 import AddressForm from "../components/AddressForm";
 
