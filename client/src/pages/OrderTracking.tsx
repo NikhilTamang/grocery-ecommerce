@@ -13,10 +13,6 @@ const OrderTracking = () => {
 
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
-  const [liveLocation, setLiveLocation] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
 
   useEffect(() => {
     setOrder(dummyDashboardOrdersData.find((o) => o._id === id) as any);
