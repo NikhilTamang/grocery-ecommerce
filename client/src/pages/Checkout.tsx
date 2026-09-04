@@ -36,7 +36,7 @@ const Checkout = () => {
     lng: 0,
   });
 
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [paymentMethod, setPaymentMethod] = useState("esewa");
 
   const deliveryFee = cartTotal > 1000 ? 0 : 100;
 

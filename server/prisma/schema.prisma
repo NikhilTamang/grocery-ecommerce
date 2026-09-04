@@ -59,7 +59,7 @@ model Order {
   user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   items           Json
   shippingAddress Json
-  paymentMethod   String @default("card")
+  paymentMethod   String @default("esewa")
   subtotal        Float
   deliveryFee     Float? @default(0)
   tax             Float? @default(0)
