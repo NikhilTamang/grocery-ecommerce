@@ -1,7 +1,8 @@
 import "dotenv/config";
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import authRouter from "./routes/authRoutes.js";
+import productRouter from "./routes/productRoutes.js";
 
 const app = express();
 
@@ -16,6 +17,13 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/products", productRouter);
+
+// Error Handling
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(error);
+  res.status(500).json({ message: error.message });
+});
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
