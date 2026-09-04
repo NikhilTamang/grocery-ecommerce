@@ -6,6 +6,7 @@ import productRouter from "./routes/productRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import addressRouter from "./routes/addressRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/products", productRouter);
 app.use("/api/upload", uploadRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/addresses", addressRouter);
+app.use("/api/admin", adminRouter);
 
 // Error Handling
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
