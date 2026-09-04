@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import type { Address } from "../types";
-import { dummyAddressData } from "../assets/assets";
 import { MapPinIcon, PlusIcon } from "lucide-react";
 import Loading from "../components/Loading";
 import AddressCard from "../components/AddressCard";
 import AddressForm from "../components/AddressForm";
+import { useAuth } from "../context/AuthContext";
+import api from "../config/api";
+import toast from "react-hot-toast";
 
 const Addresses = () => {
-  const [Addresses, setAddresses] = useState<Address[]>([]);
+  const { updateUser } = useAuth();
+
+  const [addresses, setAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -33,8 +37,27 @@ const Addresses = () => {
     setEditingId(null);
   };
 
-  const handleSumbit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+
+    try {
+      const payload = { ...form };
+
+      if (editingId) {
+        const { data } = await api.put(`/addresses/${editingId}`, payload);
+        setAddresses(data.addresses);
+        updateUser({ addresses: data.addresses });
+        toast.success("Address updated!");
+      } else {
+        const { data } = await api.post(`/addresses`, payload);
+        setAddresses(data.addresses);
+        updateUser({ addresses: data.addresses });
+        toast.success("Address added!");
+      }
+      resetForm();
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || error?.message);
+    }
   };
 
   const onEditHandler = (add: Address) => {
@@ -46,15 +69,22 @@ const Addresses = () => {
       zip: add.zip,
       isDefault: add.isDefault,
     });
-    setEditingId(add._id);
+    setEditingId(add.id);
     setShowForm(true);
   };
 
   useEffect(() => {
-    setAddresses(dummyAddressData);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    api
+      .get("/addresses")
+      .then(({ data }) => {
+        setAddresses(data.addresses);
+      })
+      .catch((error: any) => {
+        toast.error(error.response?.data?.message || error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -80,7 +110,7 @@ const Addresses = () => {
         {showForm && (
           <AddressForm
             resetForm={resetForm}
-            handleSumbit={handleSumbit}
+            handleSubmit={handleSubmit}
             form={form}
             setForm={setForm}
             editingId={editingId}
@@ -90,7 +120,7 @@ const Addresses = () => {
         {/* Addresses List  */}
         {loading ? (
           <Loading />
-        ) : Addresses.length === 0 ? (
+        ) : addresses.length === 0 ? (
           <div className="text-center py-16">
             <MapPinIcon className="size-16 text-app-border mx-auto mb-4" />
             <h2 className="text-lg font-semibold text-app-green mb-2">
@@ -102,9 +132,9 @@ const Addresses = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            {Addresses.map((add) => (
+            {addresses.map((add) => (
               <AddressCard
-                key={add._id}
+                key={add.id}
                 addr={add}
                 onEditHandler={onEditHandler}
                 setAddresses={setAddresses}

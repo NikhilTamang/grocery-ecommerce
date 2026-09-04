@@ -30,8 +30,8 @@ model Address {
   state     String
   zip       String
   isDefault Boolean  @default(false)
-  lat       Float
-  lng       Float
+  lat       Float?
+  lng       Float?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

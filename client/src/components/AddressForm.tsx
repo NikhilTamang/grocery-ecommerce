@@ -2,7 +2,7 @@ import { XIcon } from "lucide-react";
 
 const AddressForm = ({
   resetForm,
-  handleSumbit,
+  handleSubmit,
   form,
   setForm,
   editingId,
@@ -16,7 +16,7 @@ const AddressForm = ({
     <div onClick={resetForm} className="fixed inset-0 z-50 flex-center p-4">
       <form
         onClick={(e) => e.stopPropagation()}
-        onSubmit={handleSumbit}
+        onSubmit={handleSubmit}
         className="bg-white rounded-2xl p-6 w-full max-w-lg animate-fade-in"
       >
         {/* form header  */}

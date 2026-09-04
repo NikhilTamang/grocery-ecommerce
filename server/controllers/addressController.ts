@@ -16,18 +16,12 @@ export const getAddresses = async (req: Request, res: Response) => {
 export const addAddress = async (req: Request, res: Response) => {
   const { label, address, city, state, zip, isDefault, lat, lng } = req.body;
 
-  // Require coordinates
-  if (lat === null || lng === null) {
-    return res
-      .status(400)
-      .json({ message: "Latitude and longitude are required." });
-  }
-  const cuurentAddresses = await prisma.address.findMany({
+  const currentAddresses = await prisma.address.findMany({
     where: { userId: req.user!.id },
   });
 
   let makeDefault = isDefault;
-  if (cuurentAddresses.length === 0) {
+  if (currentAddresses.length === 0) {
     makeDefault = true;
   }
 
@@ -48,8 +42,8 @@ export const addAddress = async (req: Request, res: Response) => {
       state,
       zip,
       isDefault: makeDefault,
-      lat: Number(lat),
-      lng: Number(lng),
+      lat: lat != null ? Number(lat) : null,
+      lng: lng != null ? Number(lng) : null,
     },
   });
 
@@ -65,13 +59,6 @@ export const addAddress = async (req: Request, res: Response) => {
 export const updateAddress = async (req: Request, res: Response) => {
   const { label, address, city, state, zip, isDefault, lat, lng } = req.body;
   const addressId = req.params.id;
-
-  // Require coordinates
-  if (lat === null || lng === null) {
-    return res
-      .status(400)
-      .json({ message: "Latitude and longitude are required." });
-  }
 
   if (isDefault) {
     // Unset default for other addresses
@@ -89,11 +76,11 @@ export const updateAddress = async (req: Request, res: Response) => {
   if (zip) data.zip = zip;
   if (isDefault !== undefined) data.isDefault = isDefault;
   if (lat != null) data.lat = Number(lat);
-  if (lng != null) data.lat = Number(lng);
+  if (lng != null) data.lng = Number(lng);
 
   try {
     await prisma.address.update({
-      where: { id: req.params.id as string },
+      where: { id: addressId, userId: req.user!.id },
       data,
     });
   } catch (error) {
@@ -112,7 +99,9 @@ export const updateAddress = async (req: Request, res: Response) => {
 // DELETE /api/addresses/:id
 export const deleteAddress = async (req: Request, res: Response) => {
   try {
-    await prisma.address.delete({ where: { id: req.params.id as string } });
+    await prisma.address.delete({
+      where: { id: req.params.id as string, userId: req.user!.id },
+    });
   } catch (err: any) {
     console.log(err.message);
   }
