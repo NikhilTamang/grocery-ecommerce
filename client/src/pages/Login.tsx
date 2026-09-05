@@ -50,7 +50,7 @@ const Login = () => {
         />
         <div className="relative text-center px-12">
           <h2 className="text-4xl font-semibold text-white mb-4">
-            Welcome back to NayaBaazar
+            Welcome back to NayaBazaar
           </h2>
           <p className="text-white/60 font-serif text-xl max-w-sm mx-auto">
             Fresh groceries and organic produce, delivered to your doorstep.
