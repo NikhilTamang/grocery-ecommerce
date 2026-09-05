@@ -10,6 +10,7 @@ import pantry_staples from "./pantry_staples.png";
 import snacks from "./snacks.png";
 import frozen_foods from "./frozen_foods.png";
 import meat_seafood from "./meat_seafood.png";
+import sauces from "./sauces.png";
 
 export const assets = {
     delivery_truck,
@@ -25,6 +26,7 @@ export const categoriesData = [
     { slug: "snacks", name: "Snacks", image: snacks },
     { slug: "frozen-foods", name: "Frozen Foods", image: frozen_foods },
     { slug: "dairy-eggs", name: "Dairy & Eggs", image: dairy_eggs },
+    { slug: "sauces-condiments", name: "Sauces & Condiments", image: sauces },
 ];
 
 export const heroSectionData = {
