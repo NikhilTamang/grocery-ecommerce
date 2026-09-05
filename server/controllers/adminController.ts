@@ -24,7 +24,7 @@ export const getAdminStats = async (req: Request, res: Response) => {
       take: 8,
       include: {
         user: { select: { name: true, email: true } },
-        deiveryPartner: { select: { name: true, phone: true } },
+        deliveryPartner: { select: { name: true, phone: true } },
       },
     }),
   ]);
@@ -38,3 +38,4 @@ export const getAdminStats = async (req: Request, res: Response) => {
     recentOrders,
   });
 };
+
