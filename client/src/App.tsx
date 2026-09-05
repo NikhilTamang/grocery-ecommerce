@@ -18,6 +18,8 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import AdminProductForm from "./pages/admin/AdminProductForm";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminDeliveryPartners from "./pages/admin/AdminDeliveryPartners";
+import EsewaSuccess from "./pages/EsewaSuccess";
+import EsewaFailure from "./pages/EsewaFailure";
 
 const App = () => {
   return (
@@ -47,6 +49,8 @@ const App = () => {
             <Route path="products/:id" element={<ProductPage />} />
             <Route path="search" element={<SearchResults />} />
             <Route path="deals" element={<FlashDeals />} />
+            <Route path="payment/esewa/success" element={<EsewaSuccess />} />
+            <Route path="payment/esewa/failure" element={<EsewaFailure />} />
             <Route element={<ProtectedRoute />}>
               <Route path="checkout" element={<Checkout />} />
               <Route path="orders" element={<MyOrders />} />

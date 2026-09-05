@@ -75,16 +75,35 @@ const Checkout = () => {
         paymentMethod,
       };
 
-      const { data } = await api.post("/orders", orderData);
-      console.log(data);
+      if (paymentMethod === "esewa") {
+        // Initiate eSewa — returns esewaData without creating an Order
+        const { data } = await api.post("/orders/esewa/initiate", orderData);
+        if (data.esewaData) {
+          toast.loading("Redirecting to eSewa...");
+          const { payment_url, ...fields } = data.esewaData;
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = payment_url;
 
-      if (data.url) {
-        window.location.href = data.url;
+          Object.entries(fields).forEach(([key, value]) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = String(value);
+            form.appendChild(input);
+          });
+
+          document.body.appendChild(form);
+          form.submit();
+          return;
+        }
+        toast.error("Failed to get eSewa payment data. Please try again.");
         return;
       }
 
+      // COD — create order directly
+      const { data } = await api.post("/orders", orderData);
       clearCart();
-
       toast.success("Order placed Successfully!");
       navigate(`/orders/${data.order.id}`);
     } catch (error: any) {
@@ -94,6 +113,7 @@ const Checkout = () => {
       scrollTo(0, 0);
     }
   };
+
 
   // Populate address from user's default address
   useEffect(() => {

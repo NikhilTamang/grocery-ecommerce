@@ -16,7 +16,6 @@ import {
 import DummyReviewsSection from "../assets/DummyReviewsSection";
 import ProductCard from "../components/ProductCard";
 import api from "../config/api";
-import toast from "react-hot-toast";
 
 const ProductPage = () => {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "Rs.";

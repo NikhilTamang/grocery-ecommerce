@@ -60,6 +60,10 @@ model Order {
   items           Json
   shippingAddress Json
   paymentMethod   String @default("esewa")
+  paymentStatus   String @default("PENDING")
+  transactionUuid String? @unique
+  transactionCode String?
+  paidAt          DateTime?
   subtotal        Float
   deliveryFee     Float? @default(0)
   tax             Float? @default(0)
@@ -75,6 +79,21 @@ model Order {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model PendingPayment {
+  id              String   @id @default(uuid())
+  transactionUuid String   @unique
+  userId          String
+  items           Json
+  shippingAddress Json
+  paymentMethod   String   @default("esewa")
+  subtotal        Float
+  deliveryFee     Float
+  tax             Float
+  total           Float
+  createdAt       DateTime @default(now())
+  expiresAt       DateTime
 }
 
 model DeliveryPartner {

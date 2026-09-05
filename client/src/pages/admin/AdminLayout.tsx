@@ -6,7 +6,6 @@ import {
   LogOutIcon,
   BarChart3Icon,
   ShieldIcon,
-  Truck,
 } from "lucide-react";
 import Navbar from "../../components/Navbar";
 import { useAuth } from "../../context/AuthContext";

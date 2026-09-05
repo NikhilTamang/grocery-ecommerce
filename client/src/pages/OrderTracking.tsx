@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Order } from "../types";
 import Loading from "../components/Loading";
-import { ArrowLeftIcon, MapPinIcon } from "lucide-react";
+import { ArrowLeftIcon, MapPinIcon, AlertCircle, Loader2 } from "lucide-react";
 import OrderTimeLine from "../components/OrderTracking/OrderTimeLine";
 import api from "../config/api";
+import toast from "react-hot-toast";
 
 const OrderTracking = () => {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "Rs.";
@@ -13,6 +14,7 @@ const OrderTracking = () => {
 
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+  const [retrying, setRetrying] = useState(false);
 
   useEffect(() => {
     api
@@ -27,6 +29,40 @@ const OrderTracking = () => {
         setLoading(false);
       });
   }, [id, navigate]);
+
+  const handleRetryPayment = async () => {
+    if (!order) return;
+    setRetrying(true);
+    try {
+      toast.loading("Re-initiating eSewa payment...");
+      const { data } = await api.post(`/orders/${order.id}/retry-esewa`);
+      if (data.esewaData) {
+        const { payment_url, ...fields } = data.esewaData;
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = payment_url;
+
+        Object.entries(fields).forEach(([key, value]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = String(value);
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+    } catch (err: any) {
+      toast.dismiss();
+      toast.error(
+        err?.response?.data?.message ||
+          err?.message ||
+          "Failed to re-initiate payment."
+      );
+      setRetrying(false);
+    }
+  };
 
   if (loading) return <Loading />;
   if (!order) return null;
@@ -63,6 +99,38 @@ const OrderTracking = () => {
             {order!.status}
           </span>
         </div>
+
+        {/* eSewa Payment Retry Banner */}
+        {order?.paymentMethod === "esewa" && !order?.isPaid && (
+          <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-amber-50/80 border border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+            <div className="flex items-center gap-3.5">
+              <div className="size-11 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
+                <AlertCircle className="size-6" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-amber-900">
+                  Payment Pending via eSewa
+                </p>
+                <p className="text-xs text-amber-700 mt-0.5">
+                  This order has not been completed. Retry your payment securely without placing a new order.
+                </p>
+              </div>
+            </div>
+            <button
+              disabled={retrying}
+              onClick={handleRetryPayment}
+              className="w-full sm:w-auto px-6 py-2.5 bg-[#60bb46] hover:bg-[#52a43b] disabled:opacity-50 text-white text-sm font-semibold rounded-xl flex items-center justify-center gap-2 transition-colors shrink-0 shadow-sm cursor-pointer"
+            >
+              {retrying ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" /> Redirecting...
+                </>
+              ) : (
+                "Pay with eSewa Now"
+              )}
+            </button>
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left side - Order Timeline */}
