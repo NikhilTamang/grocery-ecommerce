@@ -3,6 +3,8 @@ import { heroSectionData } from "../assets/assets";
 import { Link } from "react-router-dom";
 import {
   BikeIcon,
+  EyeIcon,
+  EyeOffIcon,
   Loader2Icon,
   LockIcon,
   MailIcon,
@@ -16,6 +18,7 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { login, register } = useAuth();
@@ -77,7 +80,10 @@ const Login = () => {
                 : "Already have an account?"}
               <button
                 className="text-orange-500 ml-1 font-semibold hover:text-orange-600 transition-colors"
-                onClick={() => setIsLoginState(!isLoginState)}
+                onClick={() => {
+                  setIsLoginState(!isLoginState);
+                  setShowPassword(false);
+                }}
               >
                 {isLoginState ? "Create one" : "Sign in"}
               </button>
@@ -121,13 +127,25 @@ const Login = () => {
               <div className="relative">
                 <LockIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-app-text-light" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-4 py-3 text-sm bg-white rounded-xl border not-focus:border-app-border transition-all"
+                  className="w-full pl-11 pr-11 py-3 text-sm bg-white rounded-xl border not-focus:border-app-border transition-all"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-app-text-light hover:text-app-green transition-colors"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <EyeOffIcon className="size-4" />
+                  ) : (
+                    <EyeIcon className="size-4" />
+                  )}
+                </button>
               </div>
             </label>
 

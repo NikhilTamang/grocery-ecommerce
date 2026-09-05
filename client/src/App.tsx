@@ -17,7 +17,6 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminProductForm from "./pages/admin/AdminProductForm";
 import AdminOrders from "./pages/admin/AdminOrders";
-import AdminDeliveryPartners from "./pages/admin/AdminDeliveryPartners";
 import EsewaSuccess from "./pages/EsewaSuccess";
 import EsewaFailure from "./pages/EsewaFailure";
 
@@ -66,10 +65,6 @@ const App = () => {
             <Route path="products/new" element={<AdminProductForm />} />
             <Route path="products/:id/edit" element={<AdminProductForm />} />
             <Route path="orders" element={<AdminOrders />} />
-            <Route
-              path="delivery-partners"
-              element={<AdminDeliveryPartners />}
-            />
           </Route>
         </Routes>
       </>

@@ -8,7 +8,6 @@ export const getAdminStats = async (req: Request, res: Response) => {
     totalUsers,
     totalProducts,
     outOfStock,
-    totalPartners,
     recentOrders,
   ] = await Promise.all([
     prisma.order.count({
@@ -17,14 +16,12 @@ export const getAdminStats = async (req: Request, res: Response) => {
     prisma.user.count(),
     prisma.product.count(),
     prisma.product.count({ where: { stock: 0 } }),
-    prisma.deliveryPartner.count(),
     prisma.order.findMany({
       where: { NOT: [{ paymentMethod: "esewa", isPaid: false }] },
       orderBy: { createdAt: "desc" },
       take: 8,
       include: {
         user: { select: { name: true, email: true } },
-        deliveryPartner: { select: { name: true, phone: true } },
       },
     }),
   ]);
@@ -34,8 +31,6 @@ export const getAdminStats = async (req: Request, res: Response) => {
     totalUsers,
     totalProducts,
     outOfStock,
-    totalPartners,
     recentOrders,
   });
 };
-

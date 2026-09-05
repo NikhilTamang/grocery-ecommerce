@@ -54,28 +54,23 @@ model Product {
 }
 
 model Order {
-  id              String @id @default(uuid())
+  id              String    @id @default(uuid())
   userId          String
-  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   items           Json
   shippingAddress Json
-  paymentMethod   String @default("esewa")
-  paymentStatus   String @default("PENDING")
-  transactionUuid String? @unique
+  paymentMethod   String    @default("esewa")
+  paymentStatus   String    @default("PENDING")
+  transactionUuid String?   @unique
   transactionCode String?
   paidAt          DateTime?
   subtotal        Float
-  deliveryFee     Float? @default(0)
-  tax             Float? @default(0)
+  deliveryFee     Float?    @default(0)
+  tax             Float?    @default(0)
   total           Float
-  status          String @default("Placed")
+  status          String    @default("Placed")
   statusHistory   Json
-
-  deliveryPartnerId String?
-  deliveryPartner   DeliveryPartner? @relation(fields: [deliveryPartnerId], references: [id], onDelete: SetNull)
-  deliveryOtp       String?          @default("")
-  liveLocation      Json?
-  isPaid            Boolean?         @default(false)
+  isPaid          Boolean?  @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -94,18 +89,4 @@ model PendingPayment {
   total           Float
   createdAt       DateTime @default(now())
   expiresAt       DateTime
-}
-
-model DeliveryPartner {
-  id          String   @id @default(uuid())
-  name        String
-  email       String   @unique
-  password    String
-  phone       String
-  avatar      String?  @default("")
-  vehicleType String?  @default("bike")
-  isActive    Boolean? @default(true)
-  orders      Order[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }

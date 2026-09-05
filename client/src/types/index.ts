@@ -59,17 +59,6 @@ export interface OrderItem {
     unit: string;
 }
 
-export interface DeliveryPartner {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-    avatar: string;
-    vehicleType: "bike" | "scooter" | "car";
-    isActive: boolean;
-    createdAt: string;
-}
-
 export interface Order {
     id: string;
     user: string | { id: string; name: string; email: string; phone?: string };
@@ -82,8 +71,6 @@ export interface Order {
     total: number;
     status: string;
     statusHistory: { status: string; timestamp: string; note: string }[];
-    deliveryPartner: DeliveryPartner | null;
-    deliveryOtp: string;
     isPaid: boolean;
     createdAt: string;
 }

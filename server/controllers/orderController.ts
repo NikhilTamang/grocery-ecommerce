@@ -367,7 +367,6 @@ export const getUserOrders = async (req: Request, res: Response) => {
   }
   const orders = await prisma.order.findMany({
     where,
-    include: { deliveryPartner: { select: { name: true, phone: true } } },
     orderBy: { createdAt: "desc" },
   });
   res.json({ orders });
@@ -380,11 +379,6 @@ export const getUserOrders = async (req: Request, res: Response) => {
 export const getOrderById = async (req: Request, res: Response) => {
   const order = await prisma.order.findFirst({
     where: { id: req.params.id as string, userId: req.user!.id },
-    include: {
-      deliveryPartner: {
-        select: { name: true, phone: true, avatar: true, vehicleType: true },
-      },
-    },
   });
   if (!order) {
     return res.status(404).json({ message: "Order not found" });
@@ -429,24 +423,8 @@ export const getAllOrders = async (req: Request, res: Response) => {
   const orders = await prisma.order.findMany({
     include: {
       user: { select: { name: true, email: true } },
-      deliveryPartner: { select: { name: true, phone: true, email: true } },
     },
     orderBy: { createdAt: "desc" },
   });
   res.json({ orders });
-};
-
-// ---------------------------------------------------------------------------
-// GET Order Location
-// GET /api/orders/:id/location
-// ---------------------------------------------------------------------------
-export const getOrderLocation = async (req: Request, res: Response) => {
-  const order = await prisma.order.findFirst({
-    where: { id: req.params.id as string, userId: req.user!.id },
-    select: { liveLocation: true, status: true },
-  });
-  if (!order) {
-    return res.status(404).json({ message: "Order not found" });
-  }
-  res.json({ liveLocation: order.liveLocation, status: order.status });
 };

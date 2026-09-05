@@ -4,7 +4,6 @@ import {
   createOrder,
   getAllOrders,
   getOrderById,
-  getOrderLocation,
   getUserOrders,
   updateOrderStatus,
   initiateEsewaPayment,
@@ -28,6 +27,5 @@ orderRouter.get("/", auth, getUserOrders);
 orderRouter.get("/all", auth, admin, getAllOrders);
 orderRouter.get("/:id", auth, getOrderById);
 orderRouter.put("/:id/status", auth, admin, updateOrderStatus);
-orderRouter.get("/:id/location", auth, getOrderLocation);
 
 export default orderRouter;

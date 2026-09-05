@@ -9,8 +9,6 @@ import drinks from "./drinks.png";
 import pantry_staples from "./pantry_staples.png";
 import snacks from "./snacks.png";
 import frozen_foods from "./frozen_foods.png";
-import personal_care from "./personal_care.png";
-import baby_care from "./baby_care.png";
 import meat_seafood from "./meat_seafood.png";
 
 export const assets = {
@@ -20,14 +18,12 @@ export const assets = {
 
 export const categoriesData = [
     { slug: "fruits-vegetables", name: "Fruits & Vegetables", image: fruits_vegetables },
-    { slug: "personal-care", name: "Personal Care", image: personal_care },
     { slug: "pantry-staples", name: "Pantry Staples", image: pantry_staples },
     { slug: "bakery", name: "Bakery", image: bakery },
     { slug: "beverages", name: "Beverages", image: drinks },
     { slug: "meat-seafood", name: "Meat & Seafood", image: meat_seafood },
     { slug: "snacks", name: "Snacks", image: snacks },
     { slug: "frozen-foods", name: "Frozen Foods", image: frozen_foods },
-    { slug: "baby-care", name: "Baby Care", image: baby_care },
     { slug: "dairy-eggs", name: "Dairy & Eggs", image: dairy_eggs },
 ];
 
@@ -41,8 +37,6 @@ export const heroSectionData = {
         { icon: ShieldCheckIcon, title: "Secure Pay", desc: "Safe checkout" },
     ],
 };
-
-export const deliveryPartnerLoginImage = "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=200";
 
 export const appPromoBannerData = {
     title: "Get fresh groceries in minutes",
@@ -67,7 +61,6 @@ export const footerData = {
                 { label: "All Products", to: "/products" },
                 { label: "Flash Deals", to: "/deals" },
                 { label: "Track Order", to: "/orders" },
-                { label: "Delivery Partner", to: "/delivery" },
             ],
         },
         {
@@ -117,7 +110,6 @@ export const dummyAdminDashboardData = {
     totalUsers: 3,
     totalProducts: 27,
     outOfStock: 0,
-    totalPartners: 2,
     recentOrders: [
         {
             shippingAddress: {
@@ -128,11 +120,6 @@ export const dummyAdminDashboardData = {
                 zip: "876543",
                 lat: 40.7128,
                 lng: -74.006,
-            },
-            liveLocation: {
-                lat: 40.7128,
-                lng: -74.006,
-                updatedAt: "2026-04-06T08:41:27.211Z",
             },
             id: "69d366617ed7e54198d67dac",
             user: {
@@ -174,12 +161,6 @@ export const dummyAdminDashboardData = {
                     timestamp: "2026-04-06T07:53:05.769Z",
                 },
                 {
-                    status: "Assigned",
-                    note: "Assigned to Rahul",
-                    id: "69d366ab7ed7e54198d67dbe",
-                    timestamp: "2026-04-06T07:54:19.796Z",
-                },
-                {
                     status: "Packed",
                     note: "Status updated to Packed",
                     id: "69d366b37ed7e54198d67ddc",
@@ -193,51 +174,17 @@ export const dummyAdminDashboardData = {
                 },
                 {
                     status: "Delivered",
-                    note: "Delivered by partner",
+                    note: "Order delivered",
                     id: "69d373207ed7e54198d681b1",
                     timestamp: "2026-04-06T08:47:28.983Z",
                 },
             ],
-            deliveryPartner: {
-                id: "69bbfc3866db7c6cdea47ede",
-                name: "Rahul",
-                phone: "987654321",
-            },
-            deliveryOtp: "",
             isPaid: false,
             createdAt: "2026-04-06T07:53:05.774Z",
             updatedAt: "2026-04-06T08:47:28.984Z",
-            __v: 4,
         },
     ],
 };
-
-export const dummyDeliveryPartnerData = [
-    {
-        id: "69bbfc6c66db7c6cdea47ee4",
-        name: "John Doe",
-        email: "johndoe@example.com",
-        phone: "987654321",
-        avatar: "",
-        vehicleType: "bike",
-        isActive: true,
-        createdAt: "2026-03-19T13:38:52.827Z",
-        updatedAt: "2026-03-19T13:38:52.827Z",
-        __v: 0,
-    },
-    {
-        id: "69bbfc3866db7c6cdea47ede",
-        name: "Rahul",
-        email: "rahul@example.com",
-        phone: "987654321",
-        avatar: "",
-        vehicleType: "bike",
-        isActive: true,
-        createdAt: "2026-03-19T13:38:00.872Z",
-        updatedAt: "2026-03-19T13:38:00.872Z",
-        __v: 0,
-    },
-];
 
 export const dummyDashboardOrdersData = [
     {
@@ -250,17 +197,8 @@ export const dummyDashboardOrdersData = [
             lat: 40.7128,
             lng: -74.006,
         },
-        liveLocation: {
-            lat: 40.7128,
-            lng: -74.006,
-            updatedAt: "2026-04-06T08:41:27.211Z",
-        },
         id: "69d366617ed7e54198d67dac",
-        user: {
-            id: "69bb6caf448f2d818db59122",
-            name: "Admin",
-            email: "admin@example.com",
-        },
+        user: { id: "69bb6caf448f2d818db59122", name: "Admin", email: "admin@example.com" },
         items: [
             {
                 product: "69c22613ae75a98c7cd13b3b",
@@ -289,21 +227,16 @@ export const dummyDashboardOrdersData = [
         status: "Delivered",
         statusHistory: [
             { status: "Placed", note: "Order placed successfully", id: "69d366617ed7e54198d67daf", timestamp: "2026-04-06T07:53:05.769Z" },
-            { status: "Assigned", note: "Assigned to Rahul", id: "69d366ab7ed7e54198d67dbe", timestamp: "2026-04-06T07:54:19.796Z" },
             { status: "Packed", note: "Status updated to Packed", id: "69d366b37ed7e54198d67ddc", timestamp: "2026-04-06T07:54:27.171Z" },
             { status: "Out for Delivery", note: "Status updated to Out for Delivery", id: "69d366b57ed7e54198d67e00", timestamp: "2026-04-06T07:54:29.226Z" },
-            { status: "Delivered", note: "Delivered by partner", id: "69d373207ed7e54198d681b1", timestamp: "2026-04-06T08:47:28.983Z" },
+            { status: "Delivered", note: "Order delivered", id: "69d373207ed7e54198d681b1", timestamp: "2026-04-06T08:47:28.983Z" },
         ],
-        deliveryPartner: { id: "69bbfc3866db7c6cdea47ede", name: "Rahul", email: "rahul@example.com", phone: "987654321" },
-        deliveryOtp: "",
         isPaid: false,
         createdAt: "2026-04-06T07:53:05.774Z",
         updatedAt: "2026-04-06T08:47:28.984Z",
-        __v: 4,
     },
     {
         shippingAddress: { label: "Home", address: "New Market Road ", city: "New York ", state: "NY", zip: "876543", lat: 40.7128, lng: -74.006 },
-        liveLocation: { lat: 40.7128, lng: -74.006, updatedAt: "2026-04-06T08:41:27.211Z" },
         id: "69d366617ed7e54198d67dad",
         user: { id: "69bb6caf448f2d818db59122", name: "Admin", email: "admin@example.com" },
         items: [
@@ -318,16 +251,12 @@ export const dummyDashboardOrdersData = [
         status: "Out for Delivery",
         statusHistory: [
             { status: "Placed", note: "Order placed successfully", id: "69d366617ed7e54198d67daf", timestamp: "2026-04-06T07:53:05.769Z" },
-            { status: "Assigned", note: "Assigned to Rahul", id: "69d366ab7ed7e54198d67dbe", timestamp: "2026-04-06T07:54:19.796Z" },
             { status: "Packed", note: "Status updated to Packed", id: "69d366b37ed7e54198d67ddc", timestamp: "2026-04-06T07:54:27.171Z" },
             { status: "Out for Delivery", note: "Status updated to Out for Delivery", id: "69d366b57ed7e54198d67e00", timestamp: "2026-04-06T07:54:29.226Z" },
         ],
-        deliveryPartner: { id: "69bbfc3866db7c6cdea47ede", name: "Rahul", email: "rahul@example.com", phone: "987654321" },
-        deliveryOtp: "754730",
         isPaid: false,
         createdAt: "2026-04-06T07:53:05.774Z",
         updatedAt: "2026-04-06T08:47:28.984Z",
-        __v: 4,
     },
 ];
 
