@@ -3,9 +3,6 @@ import { Prisma } from "./generated/prisma/client.js";
 
 const seedDB = async () => {
   try {
-    await prisma.product.deleteMany({});
-    console.log("Cleared existing products");
-
     const products: Prisma.ProductCreateManyInput[] = [
       {
         name: "Butter Croissant 100g",
