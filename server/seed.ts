@@ -18,8 +18,6 @@ const seedDB = async () => {
         unit: "100g",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Organic Quinoa 500g",
@@ -32,8 +30,6 @@ const seedDB = async () => {
         unit: "500g",
         stock: 100,
         isOrganic: true,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Brown Bread 400g",
@@ -46,8 +42,6 @@ const seedDB = async () => {
         unit: "400g",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Barley 1kg",
@@ -60,8 +54,6 @@ const seedDB = async () => {
         unit: "1kg",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Knorr Cup Soup 70g",
@@ -74,8 +66,6 @@ const seedDB = async () => {
         unit: "70g",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Maggi Noodles 280g",
@@ -88,8 +78,6 @@ const seedDB = async () => {
         unit: "280g",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Sprite 1.5L",
@@ -102,8 +90,6 @@ const seedDB = async () => {
         unit: "1.5L",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Carrot 500g",
@@ -117,8 +103,6 @@ const seedDB = async () => {
         unit: "500g",
         stock: 100,
         isOrganic: true,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Coca-Cola 1.5L",
@@ -131,8 +115,6 @@ const seedDB = async () => {
         unit: "1.5L",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Brown Rice 1kg",
@@ -145,8 +127,6 @@ const seedDB = async () => {
         unit: "1kg",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Eggs 12 pcs",
@@ -160,8 +140,6 @@ const seedDB = async () => {
         unit: "12pcs",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Banana 1 kg",
@@ -175,8 +153,6 @@ const seedDB = async () => {
         unit: "1kg",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Basmati Rice 5kg",
@@ -189,8 +165,6 @@ const seedDB = async () => {
         unit: "5kg",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Onion 500g",
@@ -203,8 +177,6 @@ const seedDB = async () => {
         unit: "500g",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "7 Up 1.5L",
@@ -217,8 +189,6 @@ const seedDB = async () => {
         unit: "1.5L",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Spinach 500g",
@@ -232,8 +202,6 @@ const seedDB = async () => {
         unit: "500g",
         stock: 100,
         isOrganic: true,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Orange 1 kg",
@@ -247,8 +215,6 @@ const seedDB = async () => {
         unit: "1kg",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Wheat Flour 5kg",
@@ -261,8 +227,6 @@ const seedDB = async () => {
         unit: "5kg",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Grapes 500g",
@@ -276,8 +240,6 @@ const seedDB = async () => {
         unit: "500g",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Fanta 1.5L",
@@ -290,8 +252,6 @@ const seedDB = async () => {
         unit: "1.5L",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Paneer 200g",
@@ -305,8 +265,6 @@ const seedDB = async () => {
         unit: "200g",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Mango 1 kg",
@@ -320,8 +278,6 @@ const seedDB = async () => {
         unit: "1kg",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Tomato 1 kg",
@@ -335,8 +291,6 @@ const seedDB = async () => {
         unit: "1kg",
         stock: 100,
         isOrganic: true,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Potato 500g",
@@ -350,8 +304,6 @@ const seedDB = async () => {
         unit: "500g",
         stock: 100,
         isOrganic: true,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Cheese 200g",
@@ -365,8 +317,6 @@ const seedDB = async () => {
         unit: "200g",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Amul Milk 1L",
@@ -379,8 +329,6 @@ const seedDB = async () => {
         unit: "1L",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
       {
         name: "Apple 1 kg",
@@ -393,8 +341,6 @@ const seedDB = async () => {
         unit: "1kg",
         stock: 100,
         isOrganic: false,
-        rating: 4.5,
-        reviewCount: 12,
       },
     ];
 
@@ -404,7 +350,7 @@ const seedDB = async () => {
 
     console.log(`Created ${products.length} products.`);
     console.log("Seed completed successfully");
-    
+
     process.exit(0);
   } catch (error) {
     console.error("Seed error: ", error);
