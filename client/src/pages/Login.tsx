@@ -13,6 +13,25 @@ import {
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
+// Password strength rules (must match backend)
+const PASSWORD_RULES = [
+  { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
+  { label: "One uppercase letter (A-Z)", test: (p: string) => /[A-Z]/.test(p) },
+  { label: "One lowercase letter (a-z)", test: (p: string) => /[a-z]/.test(p) },
+  { label: "One number (0-9)", test: (p: string) => /\d/.test(p) },
+  {
+    label: "One special character (e.g. !@#$%^&*)",
+    test: (p: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(p),
+  },
+];
+
+const getPasswordError = (p: string): string | null => {
+  for (const rule of PASSWORD_RULES) {
+    if (!rule.test(p)) return `Password must have: ${rule.label.toLowerCase()}.`;
+  }
+  return null;
+};
+
 const Login = () => {
   const [isLoginState, setIsLoginState] = useState(true);
   const [name, setName] = useState("");
@@ -25,6 +44,16 @@ const Login = () => {
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+
+    // Only enforce strong password on registration
+    if (!isLoginState) {
+      const pwError = getPasswordError(password);
+      if (pwError) {
+        toast.error(pwError);
+        return;
+      }
+    }
+
     setLoading(true);
     try {
       if (isLoginState) {
@@ -35,7 +64,7 @@ const Login = () => {
     } catch (error: any) {
       toast.error(error?.response?.data?.message || error?.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -148,6 +177,28 @@ const Login = () => {
                 </button>
               </div>
             </label>
+
+            {/* Password requirements hint — register only */}
+            {!isLoginState && (
+              <ul className="text-xs space-y-1 pl-1">
+                {/* {PASSWORD_RULES.map((rule) => {
+                  const passed = rule.test(password);
+                  return (
+                    <li
+                      key={rule.label}
+                      className={`flex items-center gap-1.5 transition-colors ${
+                        passed ? "text-app-green" : "text-app-text-light"
+                      }`}
+                    >
+                      <span className={`inline-block size-1.5 rounded-full flex-shrink-0 ${
+                        passed ? "bg-app-green" : "bg-gray-300"
+                      }`} />
+                      {rule.label}
+                    </li>
+                  );
+                })} */}
+              </ul>
+            )}
 
             <button
               type="submit"

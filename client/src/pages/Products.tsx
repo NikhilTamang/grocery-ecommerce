@@ -34,7 +34,7 @@ const Products = () => {
       if (maxPrice) params.set("maxPrice", maxPrice);
 
       params.set("page", String(page));
-      params.set("limit", String("12"));
+      params.set("limit", String("20"));
 
       const { data } = await api.get(`/products?${params.toString()}`);
       setProducts(data.products);
@@ -128,7 +128,6 @@ const Products = () => {
                     <option value="">Newest</option>
                     <option value="price_asc">Price: Low → High</option>
                     <option value="price_desc">Price: High → Low</option>
-                    <option value="rating">Top Rated</option>
                     <option value="name">A → Z</option>
                   </select>
                   <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 text-app-text-light pointer-events-none" />

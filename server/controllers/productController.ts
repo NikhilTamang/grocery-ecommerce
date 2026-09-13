@@ -16,12 +16,12 @@ export const getFlashDeals = async (req: Request, res: Response) => {
     return { ...p, discount };
   });
 
-  res.json({ products: productsWithDiscount.slice(0, 8) });
+  res.json({ products: productsWithDiscount.slice(0, 10) });
 };
 
 // GET /api/products
 export const getProducts = async (req: Request, res: Response) => {
-  const { category, search, minPrice, maxPrice, sort } = req.query;
+  const { category, search, minPrice, maxPrice, sort, page, limit } = req.query;
 
   const where: any = {};
   if (category && category !== "all") {
@@ -43,18 +43,33 @@ export const getProducts = async (req: Request, res: Response) => {
   }
 
   const orderBy: any = {};
-  if (sort === "price-low") {
+  if (sort === "price_asc") {
     orderBy.price = "asc";
-  } else if (sort === "price-high") {
+  } else if (sort === "price_desc") {
     orderBy.price = "desc";
+  } else if (sort === "name") {
+    orderBy.name = "asc";
   } else {
+    // default: newest first
     orderBy.createdAt = "desc";
   }
 
-  const products = await prisma.product.findMany({
-    where,
-    orderBy,
-  });
+  // Pagination
+  const pageNum = Math.max(1, Number(page) || 1);
+  const limitNum = Math.max(1, Number(limit) || 20);
+  const skip = (pageNum - 1) * limitNum;
+
+  const [total, products] = await Promise.all([
+    prisma.product.count({ where }),
+    prisma.product.findMany({
+      where,
+      orderBy,
+      skip,
+      take: limitNum,
+    }),
+  ]);
+
+  const pages = Math.ceil(total / limitNum);
 
   const productsWithDiscount = products.map((p: any) => {
     const discount =
@@ -64,7 +79,7 @@ export const getProducts = async (req: Request, res: Response) => {
     return { ...p, discount };
   });
 
-  res.json({ products: productsWithDiscount });
+  res.json({ products: productsWithDiscount, total, pages });
 };
 
 // GET /api/products/:id
@@ -80,9 +95,9 @@ export const getProductById = async (req: Request, res: Response) => {
   const discount =
     product.originalPrice && product.price
       ? Math.round(
-          ((product.originalPrice - product.price) / product.originalPrice) *
-            100,
-        )
+        ((product.originalPrice - product.price) / product.originalPrice) *
+        100,
+      )
       : 0;
   res.json({ product: { ...product, discount } });
 };
@@ -107,7 +122,9 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 // DELETE api/products/:id
 export const deleteProduct = async (req: Request, res: Response) => {
-  await prisma.product.update({ where: { id: req.params.id as string },
-  data: {stock: Number(0)} });
+  await prisma.product.update({
+    where: { id: req.params.id as string },
+    data: { stock: Number(0) }
+  });
   res.json({ message: "Product updated successfully." });
 };

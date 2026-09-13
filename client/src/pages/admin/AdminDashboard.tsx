@@ -134,7 +134,7 @@ export default function AdminDashboard() {
                       </p>
                     </td>
                     <td className="px-6 py-4 text-zinc-600">
-                      {order.items?.length || 0} items
+                      {order.items?.length || 0} {order.items?.length === 1 ? "item" : "items"}
                     </td>
                     <td className="px-6 py-4 font-medium">
                       {currency}

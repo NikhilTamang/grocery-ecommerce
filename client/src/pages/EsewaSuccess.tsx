@@ -48,8 +48,8 @@ export default function EsewaSuccess() {
         console.error("Verification error:", err);
         setErrorMessage(
           err?.response?.data?.message ||
-            err?.message ||
-            "Unable to verify your eSewa payment."
+          err?.message ||
+          "Unable to verify your eSewa payment."
         );
       } finally {
         setLoading(false);
@@ -112,7 +112,7 @@ export default function EsewaSuccess() {
               </p>
             </div>
 
-            {orderId && (
+            {/* {orderId && (
               <div className="p-4 bg-zinc-50 rounded-2xl border border-zinc-100 text-left">
                 <p className="text-xs text-zinc-400 uppercase font-semibold">
                   Order Reference
@@ -121,7 +121,7 @@ export default function EsewaSuccess() {
                   {orderId}
                 </p>
               </div>
-            )}
+            )} */}
 
             <div className="pt-2 space-y-3">
               {orderId && (

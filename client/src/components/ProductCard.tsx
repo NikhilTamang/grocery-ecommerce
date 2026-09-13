@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import type { Product } from "../types";
 import { Plus, Star } from "lucide-react";
 import { useCart } from "../context/CartContext";
+// import { useAuth } from "../context/AuthContext";
 
 interface Props {
   product: Product;
@@ -11,7 +12,19 @@ const ProductCard = ({ product }: Props) => {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "Rs.";
 
   const { addToCart } = useCart();
+  // const { user } = useAuth();
   const navigate = useNavigate();
+
+  // const handleBuyNow = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   if (!user) {
+  //     navigate("/login");
+  //     return;
+  //   }
+  //   const buyNowItems = [{ product, quantity: 1 }];
+  //   sessionStorage.setItem("buy_now_cart", JSON.stringify(buyNowItems));
+  //   navigate("/checkout");
+  // };
 
   return (
     <div
@@ -58,7 +71,7 @@ const ProductCard = ({ product }: Props) => {
         )}
 
         {/* Price + Add  */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-1">
           <div className="flex items-center gap-1 truncate">
             <span className="text-base font-medium">
               {currency}
@@ -74,15 +87,24 @@ const ProductCard = ({ product }: Props) => {
               </span>
             )}
           </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              addToCart(product);
-            }}
-            className="size-7 rounded-full bg-app-orange text-white flex-center shrink-0 hover:bg-app-orange-dark transition-colors active:scale-95"
-          >
-            <Plus className="size-3.5" />
-          </button>
+          <div className="flex items-center gap-1 shrink-0">
+            {/* <button
+              onClick={handleBuyNow}
+              title="Buy Now"
+              className="size-7 rounded-full bg-app-green text-white flex-center hover:bg-app-green-light transition-colors active:scale-95"
+            >
+              <ZapIcon className="size-3.5" />
+            </button> */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                addToCart(product);
+              }}
+              className="size-7 rounded-full bg-app-orange text-white flex-center hover:bg-app-orange-dark transition-colors active:scale-95"
+            >
+              <Plus className="size-3.5" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

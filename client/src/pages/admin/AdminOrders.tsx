@@ -71,6 +71,7 @@ export default function AdminOrders() {
               <tr>
                 <th className="px-6 py-4">Order Details</th>
                 <th className="px-6 py-4">Customer</th>
+                <th className="px-6 py-4">Address</th>
                 <th className="px-6 py-4">Total</th>
                 <th className="px-6 py-4">Status</th>
               </tr>
@@ -106,6 +107,22 @@ export default function AdminOrders() {
                       <p className="text-xs text-zinc-500">
                         {order.user?.email || "No email"}
                       </p>
+                    </td>
+                    <td className="px-6 py-4">
+                      {order.shippingAddress ? (
+                        <p className="text-xs text-zinc-600 max-w-[180px] whitespace-normal leading-snug">
+                          {[
+                            order.shippingAddress.address,
+                            order.shippingAddress.city,
+                            order.shippingAddress.state,
+                            order.shippingAddress.zip,
+                          ]
+                            .filter(Boolean)
+                            .join(", ")}
+                        </p>
+                      ) : (
+                        <span className="text-xs text-zinc-400">—</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 font-medium">
                       {currency}

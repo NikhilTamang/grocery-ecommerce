@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import type { Address } from "../types";
+import type { Address, CartItem } from "../types";
 import {
   ArrowLeft,
   CheckIcon,
@@ -20,8 +20,31 @@ const Checkout = () => {
   const navigate = useNavigate();
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "Rs.";
 
-  const { items, cartTotal, clearCart } = useCart();
+  const { items: cartItems, clearCart } = useCart();
   const { user } = useAuth();
+
+  // Buy Now override: if sessionStorage has buy_now_cart, use it instead of the real cart.
+  // The real cart is NEVER modified.
+  const [buyNowItems, setBuyNowItems] = useState<CartItem[] | null>(null);
+
+  useEffect(() => {
+    const raw = sessionStorage.getItem("buy_now_cart");
+    if (raw) {
+      try {
+        setBuyNowItems(JSON.parse(raw));
+      } catch {
+        sessionStorage.removeItem("buy_now_cart");
+      }
+    }
+    // Clear on unmount so navigating away doesn't leave stale data
+    return () => {
+      sessionStorage.removeItem("buy_now_cart");
+    };
+  }, []);
+
+  // Active items and total: buy-now overrides regular cart
+  const items = buyNowItems ?? cartItems;
+  const cartTotal = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   const [step, setStep] = useState("address");
   const [loading, setLoading] = useState(false);
@@ -103,7 +126,9 @@ const Checkout = () => {
 
       // COD — create order directly
       const { data } = await api.post("/orders", orderData);
-      clearCart();
+      // Only clear the real cart if this was NOT a buy-now session
+      if (!buyNowItems) clearCart();
+      sessionStorage.removeItem("buy_now_cart");
       toast.success("Order placed Successfully!");
       navigate(`/orders/${data.order.id}`);
     } catch (error: any) {

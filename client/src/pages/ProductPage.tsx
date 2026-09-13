@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import type { Product } from "../types";
 import Loading from "../components/Loading";
@@ -12,6 +13,7 @@ import {
   PlusIcon,
   ShoppingCartIcon,
   StarIcon,
+  ZapIcon,
 } from "lucide-react";
 import DummyReviewsSection from "../assets/DummyReviewsSection";
 import ProductCard from "../components/ProductCard";
@@ -22,6 +24,7 @@ const ProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { items, addToCart, updateQuantity, removeFromCart } = useCart();
+  const { user } = useAuth();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
@@ -71,6 +74,17 @@ const ProductPage = () => {
   const handlePlus = () => {
     if (inCart) updateQuantity(product.id, cartItem.quantity + 1);
     else setLocalQuantity(localQuantity + 1);
+  };
+
+  const handleBuyNow = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    if (product.stock === 0) return;
+    const buyNowItems = [{ product, quantity: inCart ? cartItem!.quantity : localQuantity }];
+    sessionStorage.setItem("buy_now_cart", JSON.stringify(buyNowItems));
+    navigate("/checkout");
   };
 
   return (
@@ -229,6 +243,16 @@ const ProductPage = () => {
                   {inCart ? "Added To Cart" : "Add To Cart"}
                 </button>
               </div>
+
+              {/* Buy Now  */}
+              <button
+                onClick={handleBuyNow}
+                disabled={product.stock === 0}
+                className="mt-3 w-full py-3 font-semibold rounded-xl transition-colors flex-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-app-green text-white hover:bg-app-green-light"
+              >
+                <ZapIcon className="w-4 h-4" />
+                Buy Now
+              </button>
             </div>
           </div>
         </div>

@@ -65,12 +65,12 @@ const seedDB = async () => {
         isOrganic: false,
       },
       {
-        name: "Maggi Noodles 280g",
+        name: "Current 2X Spicy Noodles 250g",
         description: "Instant and easy to cook",
         price: 50,
         originalPrice: 55,
         image:
-          "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/dsep7owmwvfrukzbslqo.png",
+          "https://mallko.store/cdn/shop/files/Current_noodles_2_times_spicy.jpg?v=1788291614&width=713",
         category: "pantry-staples",
         unit: "280g",
         stock: 100,

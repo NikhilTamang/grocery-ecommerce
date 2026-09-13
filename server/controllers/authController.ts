@@ -19,6 +19,19 @@ const getAdminStatus = (email: string | null | undefined): boolean => {
   return adminEmails.includes(email.toLowerCase());
 };
 
+// Validate password strength
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]).{8,}$/;
+
+const validatePasswordStrength = (password: string): string | null => {
+  if (password.length < 8) return "Password must be at least 8 characters long.";
+  if (!/[A-Z]/.test(password)) return "Password must contain at least one uppercase letter.";
+  if (!/[a-z]/.test(password)) return "Password must contain at least one lowercase letter.";
+  if (!/\d/.test(password)) return "Password must contain at least one number.";
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(password))
+    return "Password must contain at least one special character (e.g. !@#$%^&*).";
+  return null;
+};
+
 // Register
 // POST /api/auth/register
 export const register = async (req: Request, res: Response) => {
@@ -26,6 +39,11 @@ export const register = async (req: Request, res: Response) => {
 
   if (!name || !email || !password) {
     return res.status(400).json({ message: "Please provide all fields." });
+  }
+
+  const passwordError = validatePasswordStrength(password);
+  if (passwordError) {
+    return res.status(400).json({ message: passwordError });
   }
 
   const existingUser = await prisma.user.findUnique({
